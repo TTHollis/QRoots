@@ -1,5 +1,9 @@
 # QRoots
 
+Live app: [qroots.onrender.com](https://qroots.onrender.com)
+
+![QRoots](projectimage.png)
+
 **Know where you're planting roots.**
 
 QRoots is a neighborhood decision-support tool that combines housing stability risk, quality-of-life indicators, and explainable machine learning into a tract-level score for communities across the United States. It is designed to support people researching where to live, as well as housing intervention efforts by organizers, advocates, service providers, and public-interest teams that need a clearer view of neighborhood-level vulnerability and opportunity.
@@ -68,9 +72,6 @@ The QRoots score is calculated on a 0-100 scale using the following weighted com
 
 Housing Stability is derived from the model's predicted housing risk, inverted so that lower predicted risk yields a higher component score. Affordability is also inverted so that lower rent burden and lower relative housing cost produce higher scores. LGBT Policy reflects state-level policy environment from MAP, normalized to 0–100.
 
-## Live Demo
-
-[https://rootscore.onrender.com](https://rootscore.onrender.com)
 
 ## Codex Build Process
 
