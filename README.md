@@ -16,9 +16,9 @@ QRoots is a neighborhood decision-support tool that combines housing stability r
 - Interactive choropleth map for ZIP-level tract results
 - SHAP explainability showing the top 3 driving factors behind each prediction
 - AI-powered plain-language neighborhood summary via OpenAI
-- Explore mode — rank every ZIP code in any state by customizable dimension weights
+- Explore mode: rank every ZIP code in any state by customizable dimension weights
 - Weight-aware AI summaries that focus on what the user prioritizes
-- Find Housing in This Area — deep links to Zillow, Realtor.com, and Apartments.com for both for-sale and for-rent listings, tied to the searched or explored ZIP code
+- Find Housing in This Area: deep links to Zillow, Realtor.com, and Apartments.com for both for-sale and for-rent listings, tied to the searched or explored ZIP code
 - Contextual resource links for housing assistance, schools, transit, mental health, and LGBTQ+ resources
 
 ## Data Sources
