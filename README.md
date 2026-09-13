@@ -1,25 +1,25 @@
 # QRoots
 
-Live app: [qroots.onrender.com](https://qroots.onrender.com)
-
-![QRoots](projectimage.png)
-
 **Know where you're planting roots.**
 
 QRoots is a neighborhood decision-support tool that combines housing stability risk, quality-of-life indicators, and explainable machine learning into a tract-level score for communities across the United States. It is designed to support people researching where to live, as well as housing intervention efforts by organizers, advocates, service providers, and public-interest teams that need a clearer view of neighborhood-level vulnerability and opportunity.
+
+**Live app:** [qroots.onrender.com](https://qroots.onrender.com)
+
+![QRoots](projectimage.png)
 
 ## Features
 
 - ZIP code and census tract search
 - QRoots composite score on a 0-100 scale
-- Six dimension scores: Housing Stability, Walkability, Transit, Education, Affordability, LGBT Policy
+- Six dimension scores: Housing Stability, Walkability, Transit, Education, Affordability, LGBTQ+ Policy
 - Interactive choropleth map for ZIP-level tract results
 - SHAP explainability showing the top 3 driving factors behind each prediction
 - AI-powered plain-language neighborhood summary via OpenAI
 - Explore mode — rank every ZIP code in any state by customizable dimension weights
 - Weight-aware AI summaries that focus on what the user prioritizes
 - Find Housing in This Area — deep links to Zillow, Realtor.com, and Apartments.com for both for-sale and for-rent listings, tied to the searched or explored ZIP code
-- Contextual resource links for housing assistance, schools, transit, mental health, and LGBT resources
+- Contextual resource links for housing assistance, schools, transit, mental health, and LGBTQ+ resources
 
 ## Data Sources
 
@@ -39,7 +39,7 @@ QRoots is a neighborhood decision-support tool that combines housing stability r
   County-level walkability, transit, bike, education, affordability, and composite quality-of-life inputs used in the QRoots score.
 
 - **Movement Advancement Project (MAP)**  
-  State-level LGBT policy tally normalized to a 0–100 score reflecting legal protections and policy environment.
+  State-level LGBTQ+ policy tally normalized to a 0–100 score reflecting legal protections and policy environment.
 
 ## Tech Stack
 
@@ -70,7 +70,7 @@ The QRoots score is calculated on a 0-100 scale using the following weighted com
 - **Education:** 15%
 - **Affordability:** 10%
 
-Housing Stability is derived from the model's predicted housing risk, inverted so that lower predicted risk yields a higher component score. Affordability is also inverted so that lower rent burden and lower relative housing cost produce higher scores. LGBT Policy reflects state-level policy environment from MAP, normalized to 0–100.
+Housing Stability is derived from the model's predicted housing risk, inverted so that lower predicted risk yields a higher component score. Affordability is also inverted so that lower rent burden and lower relative housing cost produce higher scores. LGBTQ+ Policy reflects state-level policy environment from MAP, normalized to 0–100.
 
 
 ## Codex Build Process
