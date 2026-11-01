@@ -9,8 +9,8 @@ import time
 
 ACS_YEAR = 2022
 ACS_DATASET = f"https://api.census.gov/data/{ACS_YEAR}/acs/acs5"
-CONFIG_PATH = Path(__file__).with_name("census_config.json")
-OUTPUT_PATH = Path(__file__).with_name("acs_tract_data.csv")
+CONFIG_PATH = Path("census_config.json")
+OUTPUT_PATH = Path("data/processed/acs_tract_data.csv")
 
 ACS_VARIABLES: Dict[str, str] = {
     "B19013_001E": "median_household_income",
