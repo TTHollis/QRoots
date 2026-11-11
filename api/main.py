@@ -15,6 +15,7 @@ MODELING_PATH = Path("data/processed/modeling_dataset.csv")
 ZIP_CROSSWALK_PATH = Path("data/processed/zip_tract_crosswalk.csv")
 QROOTS_SCORES_PATH = Path("data/processed/qroots_scores.csv")
 EXPLORER_INDEX_PATH = Path("data/processed/explorer_index.csv")
+VALUATION_GAP_PATH = Path("data/processed/qroots_valuation_gap.csv")
 OPENAI_CONFIG_PATH = Path("openai_config.json")
 
 RISK_LABELS = {
@@ -30,6 +31,18 @@ RISK_LABELS = {
     "fair_poor_health_status": "Fair or poor health status",
     "frequent_mental_distress": "Frequent mental distress",
 }
+
+VALUATION_COLUMNS = [
+    "GEOID",
+    "median_appraised_value",
+    "expected_value_full",
+    "gap_full",
+    "gap_full_low",
+    "gap_full_high",
+    "gap_category",
+    "appraisal_count",
+    "data_years",
+]
 
 app = FastAPI(title="QRoots API")
 app.add_middleware(
@@ -74,6 +87,20 @@ def build_driving_factors(row: pd.Series) -> list[dict]:
         )
     return drivers
 
+def build_valuation(row: pd.Series) -> dict:
+    if pd.isna(row.get("gap_category")):
+        return {"available": False}
+    return {
+        "available": True,
+        "category": str(row["gap_category"]),
+        "gap": float(row["gap_full"]),
+        "gap_low": float(row["gap_full_low"]),
+        "gap_high": float(row["gap_full_high"]),
+        "median_appraised_value": float(row["median_appraised_value"]),
+        "expected_value": float(row["expected_value_full"]),
+        "appraisal_count": int(row["appraisal_count"]),
+        "data_years": str(row["data_years"]),
+    }
 
 def load_openai_client() -> OpenAI:
     api_key = os.environ.get("OPENAI_API_KEY")
@@ -141,6 +168,15 @@ def load_data() -> None:
     zip_crosswalk_df["tract_geoid"] = (
         zip_crosswalk_df["tract_geoid"].astype("string").map(normalize_geoid)
     )
+    if VALUATION_GAP_PATH.exists():
+        valuation_df = pd.read_csv(
+            VALUATION_GAP_PATH,
+            dtype={"GEOID": "string"},
+            usecols=VALUATION_COLUMNS,
+        )
+        valuation_df["GEOID"] = valuation_df["GEOID"].astype("string").map(normalize_geoid)
+    else:
+        valuation_df = pd.DataFrame(columns=VALUATION_COLUMNS)
 
     app.state.shap_df = shap_df
     app.state.modeling_df = modeling_df
@@ -150,6 +186,7 @@ def load_data() -> None:
     app.state.tract_df = (
         shap_df.merge(modeling_df, on="GEOID", how="left", suffixes=("", "_model"))
         .merge(qroots_scores_df, on="GEOID", how="left", suffixes=("", "_qroots"))
+        .merge(valuation_df, on="GEOID", how="left", suffixes=("", "_valuation"))
     )
 
 
@@ -188,6 +225,7 @@ def get_tract(geoid: str) -> dict:
         if pd.isna(row.get("affordability_score"))
         else float(row["affordability_score"]),
         "top_driving_factors": build_driving_factors(row),
+        "valuation": build_valuation(row),
     }
 
 
@@ -227,6 +265,7 @@ def get_zip(zipcode: str) -> dict:
                 if pd.isna(row.get("affordability_score"))
                 else float(row["affordability_score"]),
                 "top_driving_factors": build_driving_factors(row),
+                "valuation": build_valuation(row),
             }
         )
 
