@@ -457,6 +457,62 @@ function QRootsSummaryCard({ overallScore, tract, summary, summaryLoading }) {
   );
 }
 
+function formatGapEnd(value) {
+  const percent = Math.round(Math.abs(Number(value)) * 100);
+  if (percent === 0) return "0%";
+  return Number(value) < 0 ? `${percent}% below` : `${percent}% above`;
+}
+
+function formatDollars(value) {
+  return Number(value).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+}
+
+const valuationSummaries = {
+  "Within expected range": "Appraisals here are in line with similar neighborhoods.",
+  "Appraised below expected range": "Appraisals here run below what similar neighborhoods receive.",
+  "Appraised above expected range": "Appraisals here run above what similar neighborhoods receive.",
+};
+
+function ValuationSection({ valuation }) {
+  if (!valuation) return null;
+
+  return (
+    <div className="mt-6">
+      <p className="text-white text-sm font-semibold">Home values compared with similar neighborhoods</p>
+      <div className="mt-3 rounded-2xl border border-white/20 bg-black/30 px-4 py-3">
+        {valuation.available ? (
+          <>
+            <p className="text-white font-medium">
+              {valuationSummaries[valuation.category] ?? valuation.category}
+            </p>
+            <p className="mt-1 text-white text-sm">
+              Likely range: {formatGapEnd(valuation.gap_low)} to {formatGapEnd(valuation.gap_high)} expected.
+              Median appraisal {formatDollars(valuation.median_appraised_value)}, compared with about{" "}
+              {formatDollars(valuation.expected_value)} expected.
+            </p>
+            <p className="mt-2 text-white/80 text-xs">
+              Based on {valuation.appraisal_count.toLocaleString("en-US")} appraisals, {valuation.data_years}.
+              Describes the neighborhood, not any single home.
+            </p>
+          </>
+        ) : (
+          <p className="text-white text-sm">
+            Not enough recent home sales here to compare appraisals with similar neighborhoods.
+          </p>
+        )}
+        <a
+          href="https://github.com/TTHollis/PricedOutOfEquity"
+          target="_blank"
+          rel="noreferrer"
+          className="mt-2 inline-block text-xs font-semibold text-amber-400 hover:text-amber-300"
+        >
+          How this is measured
+        </a>
+      </div>
+    </div>
+  );
+}
+
 function ResultCard({ tract, zip }) {
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const stateFips = String(tract.GEOID || "").slice(0, 2);
@@ -553,6 +609,8 @@ function ResultCard({ tract, zip }) {
         </ul>
       </div>
 
+      <ValuationSection valuation={tract.valuation} />
+      
       <HousingLinksSection zip={tractZip} />
 
       <div className="mt-6 rounded-2xl border border-white/30 bg-black/30">
