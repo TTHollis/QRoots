@@ -1337,8 +1337,12 @@ const normalizedWeights = totalWeight > 0
           <p className="text-sm leading-7 font-semibold text-white">
             QRoots is designed to help people make informed decisions about where to live and
             to support housing intervention efforts. Scores are advisory and reflect
-            neighborhood-level patterns, not individual circumstances. Data sources: Census ACS 5-Year Estimates, Princeton Eviction Lab, CDC PLACES 2025, 
-            Walk Score, HUD Fair Market Rent, Movement Advancement Project (MAP).
+            neighborhood-level patterns, not individual circumstances. QRoots should not be used
+            for tenant screening, steering anyone toward or away from a neighborhood, or any
+            decision that treats neighborhood data as a judgment about individual households.
+            Data sources: Census ACS 5-Year Estimates, Princeton Eviction Lab, CDC PLACES 2025,
+            Walk Score, HUD Fair Market Rent, Movement Advancement Project (MAP), FHFA Uniform
+            Appraisal Dataset Aggregate Statistics.
           </p>
           <p className="mt-3 text-sm leading-7 font-semibold text-white">
             Eviction data reflects 2016 validated records. Walk Score data reflects city-level
@@ -1346,6 +1350,12 @@ const normalizedWeights = totalWeight > 0
             Transit 15%, Education 15%, Affordability 10%. LGBT Policy score reflects
             state-level policy tally from the Movement Advancement Project (MAP), normalized
             to 0–100. Model trained on XGBoost with AUC-ROC 0.81.
+          </p>
+          <p className="mt-3 text-sm leading-7 font-semibold text-white">
+            Home value comparisons use FHFA appraisal statistics from 2019 to 2023 for loans backed
+            by Fannie Mae and Freddie Mac. They describe neighborhoods, not individual homes or
+            appraisers, contain no racial or ethnic data, and are not part of the QRoots score or
+            Explore rankings. Neighborhoods with too few recent sales show no comparison.
           </p>
           <a
             href="https://github.com/TTHollis/QRoots"
