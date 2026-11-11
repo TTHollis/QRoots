@@ -3,7 +3,7 @@ import { GeoJSON, MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import FeedbackForm from "./components/FeedbackForm";
 
-const API_BASE_URL = "https://rootscore-api.onrender.com";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://rootscore-api.onrender.com";
 const TIGER_TRACTS_URL = "https://rootscore-api.onrender.com/tracts/geojson";
 
 const badgeClasses = {
@@ -610,7 +610,7 @@ function ResultCard({ tract, zip }) {
       </div>
 
       <ValuationSection valuation={tract.valuation} />
-      
+
       <HousingLinksSection zip={tractZip} />
 
       <div className="mt-6 rounded-2xl border border-white/30 bg-black/30">
